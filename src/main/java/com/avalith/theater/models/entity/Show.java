@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "shows")
@@ -23,6 +19,6 @@ public class Show {
     @Column(name = "type_of_show")
     private String typeOfShow;
     @Column(name = "schedule")
-    Timestamp schedule;
+    private Timestamp schedule;
     private Long price;
 }

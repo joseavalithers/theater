@@ -1,6 +1,5 @@
 package com.avalith.theater.models.service;
 
-import com.avalith.theater.models.dao.ScheduleDao;
 import com.avalith.theater.models.dao.ShowDao;
 import com.avalith.theater.models.entity.Show;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -19,8 +16,6 @@ import java.util.List;
 public class ShowServiceImpl implements IShowService{
     @Autowired
     private ShowDao showDao;
-
-    private final ScheduleDao scheduleDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -36,16 +31,13 @@ public class ShowServiceImpl implements IShowService{
 
     @Override
     public Show saveShow(Show show) {
-        return null;
+        return showDao.save(show);
     }
 
-    @Override
-    public void addScheduleToShow(String name, Timestamp timestamp) {
-
-    }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Show> findByName(String name) {
-        return null;
+        return showDao.findByName(name);
     }
 }

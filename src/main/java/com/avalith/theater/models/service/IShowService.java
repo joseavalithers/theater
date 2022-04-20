@@ -9,7 +9,6 @@ public interface IShowService {
     public List<Show> findAll();
     public Show findById(Long id);
     public Show saveShow(Show show);
-    public void addScheduleToShow(String name, Timestamp timestamp);
     public List<Show> findByName(String name);
 
 }
