@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,12 @@ public class ShowResource {
     @GetMapping("/shows")
     public ResponseEntity<List<Show>> getShows(){
         return ResponseEntity.ok().body(showService.findAll());
+    }
+
+    @GetMapping("/show/{name}")
+    public ResponseEntity<List<Show>> getShowByName(@PathVariable("name") String name){
+        Optional<List<Show>> db = Optional.ofNullable(showService.findByName(name));
+        return db.map(value-> new ResponseEntity<>(value,HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/show/save")
