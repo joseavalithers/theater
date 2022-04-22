@@ -5,12 +5,14 @@ import com.avalith.theater.models.entity.Show;
 import com.avalith.theater.models.service.IShowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/api")
@@ -23,4 +25,18 @@ public class ShowResource {
     public ResponseEntity<List<Show>> getShows(){
         return ResponseEntity.ok().body(showService.findAll());
     }
+
+    @PostMapping("/show/save")
+    public ResponseEntity<Show> saveShow(@RequestBody Show show){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/show/save").toUriString());
+        return ResponseEntity.created(uri).body(showService.saveShow(show));
+    }
+    @GetMapping("/shows/{id}")
+    public ResponseEntity<Show> getShowById(@PathVariable("id") Long id){
+        Optional<Show> show = Optional.ofNullable(showService.findById(id));
+        return show.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+    }
+
+ 
+
 }

@@ -16,8 +16,8 @@ public class Show {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @Column(name = "type_of_show")
-    private String typeOfShow;
+    @Column(name = "type")
+    private String type;
     @Column(name = "schedule")
     private Timestamp schedule;
     private Long price;
