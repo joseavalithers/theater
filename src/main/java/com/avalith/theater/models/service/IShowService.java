@@ -10,6 +10,7 @@ public interface IShowService {
     public Show findById(Long id);
     public Show saveShow(Show show);
     public List<Show> findByName(String name);
+    public void deleteById(Long id);
 
 }
 /*

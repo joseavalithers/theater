@@ -40,4 +40,9 @@ public class ShowServiceImpl implements IShowService{
     public List<Show> findByName(String name) {
         return showDao.findByName(name);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        showDao.deleteById(id);
+    }
 }

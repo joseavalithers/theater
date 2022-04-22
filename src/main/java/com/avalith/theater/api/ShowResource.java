@@ -5,6 +5,7 @@ import com.avalith.theater.models.entity.Show;
 import com.avalith.theater.models.service.IShowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,31 @@ public class ShowResource {
         return show.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
- 
-
+    @PatchMapping("/show/{id}")
+    public ResponseEntity<Show> patchShow(
+            @PathVariable("id") Long id,
+            @RequestBody Show patch){
+        Show show = showService.findById(id);
+        if (patch.getName() != null){
+            show.setName(patch.getName());
+        }
+        if (patch.getPrice() != null){
+            show.setPrice(patch.getPrice());
+        }
+        if (patch.getSchedule() != null){
+            show.setSchedule(patch.getSchedule());
+        }
+        if (patch.getType() != null){
+            show.setType(patch.getType());
+        }
+        showService.saveShow(show);
+        return new ResponseEntity<>(show,HttpStatus.OK);
+    }
+    @DeleteMapping("/show/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deleteShow(@PathVariable("id") Long id){
+        try{
+            showService.deleteById(id);
+        }catch(EmptyResultDataAccessException e) {}
+    }
 }
